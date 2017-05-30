@@ -3,6 +3,7 @@
  */
 import {Component} from '@angular/core';
 import {Person} from './person';
+import {PeopleService} from './people.service';
 
 @Component({
   selector: 'people-list',
@@ -14,8 +15,9 @@ import {Person} from './person';
 })
 
 export class PeopleListComponent {
-  people: Person[] = [
-    {name: 'Vinh', height: 170, weight: 50},
-    {name: 'Tuan', height: 180, weight: 50}
-  ]
+  people: Person[] = [];
+
+  constructor(private _peopleService: PeopleService) {
+    this.people = this._peopleService.getAll();
+  }
 }
