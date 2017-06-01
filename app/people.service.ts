@@ -1,7 +1,7 @@
 /**
  * Created by davidvinhit on 5/30/2017.
  */
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Person} from './person';
 
 const PEOPLE: Person[] = [
@@ -12,13 +12,21 @@ const PEOPLE: Person[] = [
 
 @Injectable()
 export class PeopleService {
-  id;
   getAll(): Person[] {
-    return PEOPLE;
+    return PEOPLE.map(x => this.clone(x));
   }
 
   get(id: number): Person {
-    return PEOPLE.find(p => p.id === id);
+    return this.clone(PEOPLE.find(p => p.id === id));
   }
 
+  save(person: Person) {
+    let personOriginal = PEOPLE.find(x => x.id == person.id);
+    if (personOriginal)
+      Object.assign(personOriginal, person);
+  }
+
+  private clone(object: any) {
+    return JSON.parse(JSON.stringify(object));
+  }
 }
