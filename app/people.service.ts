@@ -3,6 +3,8 @@
  */
 import {Injectable} from '@angular/core';
 import {Person} from './person';
+import {Http, Response, Headers} from '@angular/http';
+import {Observable} from 'rxjs/Rx';
 
 const PEOPLE: Person[] = [
   {id: 1, name: 'Vinh', height: 170, weight: 50},
@@ -12,8 +14,21 @@ const PEOPLE: Person[] = [
 
 @Injectable()
 export class PeopleService {
-  getAll(): Person[] {
-    return PEOPLE.map(x => this.clone(x));
+  private baseUrl: string = 'http://swapi.co/api';
+
+  constructor(private http: Http) {
+
+  }
+
+  // getAll(): Observable<Person[]> {
+  //   let people$=this.http
+  //     .get(`${this.baseUrl}/people`,{headers:this.getHeaders()})
+  //     .map(mapPersons);
+  //   return people$;
+  // }
+
+  getAll():Person[]{
+    return PEOPLE;
   }
 
   get(id: number): Person {
@@ -29,4 +44,12 @@ export class PeopleService {
   private clone(object: any) {
     return JSON.parse(JSON.stringify(object));
   }
+
+  private getHeaders() {
+    let headers = new Headers();
+    headers.append('Accept', 'application/json');
+    return headers;
+  }
+
+
 }
