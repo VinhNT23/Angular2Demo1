@@ -5,8 +5,10 @@ import {PersonDetailsComponent} from './person-details.component';
 import { AppComponent }  from './app.component';
 import {PeopleService} from './people.service';
 
+import {routing} from './app.routes';
+
 @NgModule({
-  imports: [BrowserModule],
+  imports: [BrowserModule, routing],
   declarations: [AppComponent, PeopleListComponent, PersonDetailsComponent],
   bootstrap: [AppComponent],
   providers: [PeopleService]
