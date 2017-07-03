@@ -4,6 +4,7 @@
 import {Routes, RouterModule} from '@angular/router';
 import {PeopleListComponent} from './people-list.component';
 import { PersonDetailsComponent } from './person-details.component';
+import { PersonComponent } from './+person/person.component';
 
 const routes: Routes = [
     {
@@ -14,9 +15,13 @@ const routes: Routes = [
           component: PeopleListComponent,
         },
         {
-          path: ':id',
+          path: 'detail/:id',
           component: PersonDetailsComponent
-        }
+        },
+        {
+          path: 'list',
+          component: PersonComponent
+        },
       ]
     },
     {

@@ -10,7 +10,7 @@ import {PeopleService} from './people.service';
   template: `
     <ul>
       <li *ngFor="let person of people">
-        <a href="#" [routerLink]="['/persons',person.id]">
+        <a href="#" [routerLink]="['/persons/detail',person.id]">
           {{person.name}}
         </a>
       </li>

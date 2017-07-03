@@ -22,6 +22,7 @@ export class PeopleService {
   }
 
   getAll(): Observable<Person[]> {
+
     let people$ = this.http
       .get(`${this.baseUrl}/people`, {headers: this.getHeaders()})
       .map(mapPersons);
@@ -56,6 +57,7 @@ export class PeopleService {
 }
 
 function mapPersons(response: Response): Person[] {
+
   return response.json().results.map(toPerson);
 }
 
@@ -64,6 +66,7 @@ function mapPerson(response: Response): Person {
 }
 
 function toPerson(r: any): Person {
+
   let person = <Person>({
     id: extractId(r),
     url: r.url,
