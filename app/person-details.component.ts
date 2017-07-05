@@ -5,7 +5,7 @@ import {OnInit, Component, OnDestroy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeopleService} from './people.service';
 import {Person} from './person';
-import {routing} from "./app.routes";
+import {routing} from './app.routes';
 import {Response} from '@angular/http';
 
 @Component({
