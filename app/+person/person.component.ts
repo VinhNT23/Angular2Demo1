@@ -8,6 +8,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 
+import { URLSearchParams } from '@angular/http';
 // import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 // Services
@@ -57,7 +58,7 @@ export class PersonComponent implements OnInit, AfterViewInit {
       ],
       {
         ajax: this.serverData.bind(this),
-        dom: 't',
+        dom: 'tlp',
         ordering: false,
       });
   }
@@ -71,14 +72,23 @@ export class PersonComponent implements OnInit, AfterViewInit {
 
   private serverData(aoData: any, fnCallback: any, oSettings: any): void {
     let self = this;
-
+    let page = aoData.length ? (aoData.start / aoData.length) + 1 : 0;
+    let params: URLSearchParams = new URLSearchParams();
+    params.set('page', page.toString());
     // Then just call your service to get the records from server side
-    self._peopleService.getAll()
+    self._peopleService.getAll(params)
       .subscribe((res: any): void => {
-      console.log('list: '+res)
-        fnCallback({
+        console.log('list: ' + res)
+        let records = {
+          recordsTotal: res.totalCount,
+          recordsFiltered: res.totalCount,
           data: res
-        });
+        };
+        /*fnCallback({
+          data: res
+        });*/
+        console.log(records);
+        fnCallback(records);
       });
   }
 

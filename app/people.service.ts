@@ -1,10 +1,10 @@
 /**
  * Created by davidvinhit on 5/30/2017.
  */
-import {Injectable} from '@angular/core';
-import {Person} from './person';
-import {Http, Response, Headers} from '@angular/http';
-import {Observable} from 'rxjs/Rx';
+import { Injectable } from '@angular/core';
+import { Person } from './person';
+import { Http, Response, Headers, URLSearchParams } from '@angular/http';
+import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
 const PEOPLE: Person[] = [
@@ -21,10 +21,12 @@ export class PeopleService {
   constructor(private http: Http) {
   }
 
-  getAll(): Observable<Person[]> {
-
+  getAll(params: URLSearchParams): Observable<Person[]> {
     let people$ = this.http
-      .get(`${this.baseUrl}/people`, {headers: this.getHeaders()})
+      .get(`${this.baseUrl}/people`, {
+        headers: this.getHeaders(),
+        search: params
+      })
       .map(mapPersons);
     // .catch(function(err){ console.error(err); return err; });
 
@@ -82,7 +84,7 @@ function extractId(personData: any) {
   return parseInt(extractedId);
 }
 
-function handleError(error : any){
+function handleError(error: any) {
   let errorMsg = (error && error.message) || 'Other message';
   return Observable.throw(errorMsg);
 }

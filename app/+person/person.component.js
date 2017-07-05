@@ -12,6 +12,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by davidvinhit on 6/28/2017.
  */
 var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
 // import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 // Services
 var people_service_1 = require('../people.service');
@@ -42,7 +43,7 @@ var PersonComponent = (function () {
             }
         ], {
             ajax: this.serverData.bind(this),
-            dom: 't',
+            dom: 'tlp',
             ordering: false,
         });
     };
@@ -55,13 +56,23 @@ var PersonComponent = (function () {
     };
     PersonComponent.prototype.serverData = function (aoData, fnCallback, oSettings) {
         var self = this;
+        var page = aoData.length ? (aoData.start / aoData.length) + 1 : 0;
+        var params = new http_1.URLSearchParams();
+        params.set('page', page.toString());
         // Then just call your service to get the records from server side
-        self._peopleService.getAll()
+        self._peopleService.getAll(params)
             .subscribe(function (res) {
             console.log('list: ' + res);
-            fnCallback({
+            var records = {
+                recordsTotal: res.totalCount,
+                recordsFiltered: res.totalCount,
                 data: res
-            });
+            };
+            /*fnCallback({
+              data: res
+            });*/
+            console.log(records);
+            fnCallback(records);
         });
     };
     __decorate([

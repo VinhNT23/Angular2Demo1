@@ -25,9 +25,12 @@ var PeopleService = (function () {
         this.http = http;
         this.baseUrl = 'http://swapi.co/api';
     }
-    PeopleService.prototype.getAll = function () {
+    PeopleService.prototype.getAll = function (params) {
         var people$ = this.http
-            .get(this.baseUrl + "/people", { headers: this.getHeaders() })
+            .get(this.baseUrl + "/people", {
+            headers: this.getHeaders(),
+            search: params
+        })
             .map(mapPersons);
         // .catch(function(err){ console.error(err); return err; });
         return people$;
